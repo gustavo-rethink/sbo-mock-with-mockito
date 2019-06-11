@@ -3,20 +3,23 @@ package com.example.sbomockwithmockito.business;
 import com.example.sbomockwithmockito.data.SomeDataService;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class SomeBusinessImplMockTest {
 
-    SomeBusinessImpl someBusiness = new SomeBusinessImpl();
-    SomeDataService mock = mock(SomeDataService.class);
+    @InjectMocks
+    SomeBusinessImpl someBusiness;
 
-    @Before
-    public void init() {
-        someBusiness.setSomeDataService(mock);
-    }
+    @Mock
+    SomeDataService mock;
 
     @Test
     public void calculateSumUsingDataService_usingMock() {
