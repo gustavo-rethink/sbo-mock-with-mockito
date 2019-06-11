@@ -13,4 +13,14 @@ public class SomeBusinessImplTest {
         int expectedResult = 6;
         assertEquals(expectedResult, result);
     }
+
+    @Test
+    public void calculateSumUsingDataService_usingStub() {
+        SomeBusinessImpl someBusiness = new SomeBusinessImpl();
+        someBusiness.setSomeDataService(new SomeDataServiceStub());
+        int result = someBusiness.calculateSumUsingDataService();
+        int expectedResult = 6;
+        assertEquals(expectedResult, result);
+    }
+
 }
