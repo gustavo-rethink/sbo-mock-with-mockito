@@ -11,7 +11,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(HelloWorldController.class)
@@ -25,8 +26,11 @@ public class HelloWorldControllerTest {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                                                     .get("/hello-world")
                                                     .accept(MediaType.APPLICATION_JSON);
-        MvcResult mvcResult = mockMvc.perform(request).andReturn();
+        MvcResult mvcResult = mockMvc
+                .perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("Hello World"))
+                .andReturn();
 
-        assertEquals("Hello World", mvcResult.getResponse().getContentAsString());
     }
 }
