@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Arrays;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,6 +44,28 @@ public class ItemControllerTest {
                 .perform(request)
                 .andExpect(status().isOk())
                 .andExpect(content().json("{id: 1, name: Gustavo, price: 10, quantity: 20}"))
+                .andReturn();
+
+    }
+
+    @Test
+    public void retrieveAll() throws Exception {
+
+        when(mockItemBuisinessServer.retrieveAllItems())
+                .thenReturn(Arrays.asList(
+                        new Item(1, "Gustavo", 10, 20),
+                        new Item(2, "Maria", 20, 30)));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get("/retrieve-all")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc
+                .perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{id: 1, name: Gustavo, price: 10, quantity: 20}, {id: 2, name: Maria, price: 20, quantity: 30}]"))
+                //.andExpect(content().json("[{id: 1, name: Gustavo, price: 10, quantity: 20}, {}]"))
+                //.andExpect(content().json("[{id: 1, name: Gustavo, price: 10, quantity: 20}]"))
                 .andReturn();
 
     }
